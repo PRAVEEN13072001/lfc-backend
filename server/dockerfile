@@ -12,7 +12,11 @@ RUN npm install
 
 # Copy the rest of the application source code
 COPY . .
-
+WORKDIR /app/backend/prisma
+RUN npx prisma generate
+RUN npx prisma migrate dev  --name init 
+RUN npx prisma migrate deploy
+WORKDIR /app/backend
 # Expose the port the app runs on (change to your backend port)
 EXPOSE 5000
 
